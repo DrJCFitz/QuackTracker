@@ -25,28 +25,64 @@ public final class R {
         public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f080005;
         public static final int container=0x7f080000;
-        public static final int empty_addImageButton=0x7f080003;
-        public static final int empty_addLocText=0x7f080004;
+        public static final int dialog_date_datePicker=0x7f080002;
+        public static final int dialog_time_timePicker=0x7f080004;
+        public static final int empty_addImageButton=0x7f08000e;
+        public static final int empty_addLocText=0x7f08000f;
+        public static final int entryDateButton=0x7f080005;
+        public static final int entryDeadCount=0x7f08000a;
+        public static final int entryHouseSpinner=0x7f080008;
+        public static final int entryLiveCount=0x7f080009;
+        public static final int entryLocationSpinner=0x7f080007;
+        public static final int entryTimeButton=0x7f080006;
+        public static final int entry_menu_save=0x7f080013;
         public static final int fragmentContainer=0x7f080001;
-        public static final int input_locationName=0x7f080002;
+        public static final int input_HouseName=0x7f080012;
+        public static final int input_LocName=0x7f080011;
+        public static final int input_houseName=0x7f080010;
+        public static final int input_locationName=0x7f080003;
+        public static final int list_duckDead=0x7f08000d;
+        public static final int list_duckLive=0x7f08000c;
+        public static final int list_duckTime=0x7f08000b;
+        public static final int list_menu_add=0x7f080014;
+        public static final int list_menu_delete_table=0x7f080015;
+        public static final int menu_item_delete_entry=0x7f080016;
     }
     public static final class layout {
         public static final int activity_duck_list=0x7f030000;
         public static final int activity_fragment=0x7f030001;
-        public static final int dialog_location=0x7f030002;
-        public static final int fragment_quack_list=0x7f030003;
+        public static final int dialog_date=0x7f030002;
+        public static final int dialog_location=0x7f030003;
+        public static final int dialog_time=0x7f030004;
+        public static final int fragment_entry=0x7f030005;
+        public static final int fragment_quack_list=0x7f030006;
+        public static final int fragment_quack_list_empty=0x7f030007;
+        public static final int house_dialog=0x7f030008;
+        public static final int location_dialog=0x7f030009;
+        public static final int location_house_dialog=0x7f03000a;
     }
     public static final class menu {
-        public static final int duck_list=0x7f070000;
+        public static final int fragment_quack_entry_menu=0x7f070000;
+        public static final int fragment_quack_list_menu=0x7f070001;
+        public static final int quack_list_item_context=0x7f070002;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;
-        public static final int add_location=0x7f050006;
+        public static final int add_location=0x7f05000a;
         public static final int app_name=0x7f050000;
-        public static final int empty_getStartedText=0x7f050005;
-        public static final int input_locName_hint=0x7f050007;
+        public static final int date_picker_title=0x7f05000e;
+        public static final int dead_count=0x7f050011;
+        public static final int delete_list_entry=0x7f050008;
+        public static final int empty_getStartedText=0x7f05000d;
+        public static final int empty_imgButtonDescription=0x7f050005;
+        public static final int entry_menu_save=0x7f050006;
+        public static final int input_HouseName_hint=0x7f05000c;
+        public static final int input_LocName_hint=0x7f05000b;
+        public static final int list_menu_add=0x7f050007;
+        public static final int list_menu_delete_table=0x7f050009;
+        public static final int live_count=0x7f050010;
+        public static final int time_picker_title=0x7f05000f;
         public static final int title_section1=0x7f050002;
         public static final int title_section2=0x7f050003;
         public static final int title_section3=0x7f050004;

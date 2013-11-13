@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+	<EditText 
+	    android:id="@+id/input_LocName"
+	    android:hint="@string/input_LocName_hint"
+	    android:inputType="textPostalAddress"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent" >
+	</EditText>
+	<EditText 
+		android:id="@+id/input_HouseName"
+	    android:hint="@string/input_HouseName_hint"
+	    android:inputType="textPostalAddress"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent" >
+	</EditText>
+</LinearLayout>

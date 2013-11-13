@@ -6,8 +6,19 @@
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
-	<string name="empty_getStartedText">No entries!\nTap the button to get started!</string>
+	<string name="empty_imgButtonDescription">Tap to get started!</string>
+	<string name="entry_menu_save">Save</string>
+	<string name="list_menu_add">Add Item</string>
+	<string name="delete_list_entry">Delete Entry</string>
+	<string name="list_menu_delete_table">Drop Table</string>
     <string name="add_location">Add Location</string>
-	<string name="input_locName_hint">Add the Location Address</string>
+	<string name="input_LocName_hint">Add the Location Address</string>
+	<string name="input_HouseName_hint">Add the House Name</string>
+	<string name="empty_getStartedText">No entries!\nTap the button to get started!</string>
+    <string name="date_picker_title">Select Date</string>
+    <string name="time_picker_title">Select Time</string>
+    <string name="live_count">Enter Live Count</string>
+    <string name="dead_count">Enter Dead Count</string>
+		
 
 </resources>
