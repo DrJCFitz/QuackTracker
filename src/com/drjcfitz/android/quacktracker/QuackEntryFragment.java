@@ -1,14 +1,14 @@
 package com.drjcfitz.android.quacktracker;
 
-import java.util.ArrayList;
 import java.util.Date;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
+import android.database.MatrixCursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,7 +21,6 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -67,7 +66,6 @@ public class QuackEntryFragment extends Fragment implements LoaderManager.Loader
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
-		Log.i(TAG, "QuackEntryFragment onCreate()");
 		
 		Intent i = getActivity().getIntent();
 		if (i.hasExtra(QuackListFragment.EXTRA_NAV_LOCATION)) {
@@ -104,14 +102,12 @@ public class QuackEntryFragment extends Fragment implements LoaderManager.Loader
 					if (count > 0) {
 						switch (pos) {
 						case 0:
-							Log.i(TAG, "Create a new Location table");
 							FragmentManager fm = getActivity().getSupportFragmentManager();
 							LocationDialog locDialog = new LocationDialog();
 							locDialog.setTargetFragment(QuackEntryFragment.this, REQUEST_LOCATION);
 							locDialog.show(fm, DIALOG_LOCATION);
 							break;
 						default:
-							Log.i(TAG, "No Location selected");
 							break;
 						}
 					}
@@ -146,7 +142,6 @@ public class QuackEntryFragment extends Fragment implements LoaderManager.Loader
 		mDateButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				FragmentManager fm = getActivity().getSupportFragmentManager();
-				//DatePickerFragment dialog = new DatePickerFragment();
 				DatePickerFragment dialog = DatePickerFragment.newInstance(mDuck.getDate());
 				dialog.setTargetFragment(QuackEntryFragment.this, REQUEST_DATE);
 				dialog.show(fm, DIALOG_DATE);
@@ -242,14 +237,12 @@ public class QuackEntryFragment extends Fragment implements LoaderManager.Loader
 			String location = data.getStringExtra(LocationHouseDialog.EXTRA_LOCATION);
 			ContentValues contentValues = new ContentValues();
 			contentValues.put(QuackDatabaseHelper.COLUMN_LOCATION_ADDRESS, location);
-			Uri rowId = getActivity().getContentResolver().insert(QuackDataProvider.CONTENT_URI_LOCATION, contentValues);
-			Toast.makeText(getActivity(), "The location " + location + " added as " + rowId.toString(), Toast.LENGTH_SHORT).show();
+			getActivity().getContentResolver().insert(QuackDataProvider.CONTENT_URI_LOCATION, contentValues);
 		} else if (requestCode == REQUEST_HOUSE ) {
 			String house = data.getStringExtra(LocationHouseDialog.EXTRA_HOUSE);
 			ContentValues contentValues = new ContentValues();
 			contentValues.put(QuackDatabaseHelper.COLUMN_HOUSE_IDENTIFIER, house);
-			Uri rowId = getActivity().getContentResolver().insert(QuackDataProvider.CONTENT_URI_HOUSE, contentValues);
-			Toast.makeText(getActivity(), "The house " + house + " added as " + rowId.toString(), Toast.LENGTH_SHORT).show();
+			getActivity().getContentResolver().insert(QuackDataProvider.CONTENT_URI_HOUSE, contentValues);
 		} 
 		updateDate();
 	}
@@ -276,13 +269,12 @@ public class QuackEntryFragment extends Fragment implements LoaderManager.Loader
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-		Log.i(TAG, "QuackEntryFragment onLoadFinished()");
 		int cursorId = cursorLoader.getId();
 		if (cursorId == INIT_SPINNER_LOCATION) {
 			SimpleCursorAdapter simpleAdapter = new SimpleCursorAdapter(getActivity().getBaseContext(),
 					android.R.layout.simple_spinner_dropdown_item,
-					cursor,
-					new String[] { QuackDatabaseHelper.COLUMN_LOCATION_ADDRESS },
+					populateEntrySpinner(cursorId, cursor),
+					new String[] { "spinner_list_item" },
 					new int[] { android.R.id.text1 },
 					SimpleCursorAdapter.NO_SELECTION);
 			mLocSpinner.setAdapter(simpleAdapter);
@@ -290,8 +282,8 @@ public class QuackEntryFragment extends Fragment implements LoaderManager.Loader
 		} else {
 			SimpleCursorAdapter simpleAdapter = new SimpleCursorAdapter(getActivity().getBaseContext(),
 					android.R.layout.simple_spinner_dropdown_item,
-					cursor,
-					new String[] { QuackDatabaseHelper.COLUMN_HOUSE_IDENTIFIER },
+					populateEntrySpinner(cursorId, cursor),
+					new String[] { "spinner_list_item" },
 					new int[] { android.R.id.text1 },
 					SimpleCursorAdapter.NO_SELECTION);
 			mHouseSpinner.setAdapter(simpleAdapter);
@@ -310,34 +302,35 @@ public class QuackEntryFragment extends Fragment implements LoaderManager.Loader
 		}
 	}
 	
-	
-	private ArrayList<String> populateSpinner(int id, Cursor cursor) {
-		ArrayList<String> spinnerArrayList = new ArrayList<String>();
-		if (cursor.moveToFirst()) {
-			while (!cursor.isAfterLast()) {
-				if (id == INIT_SPINNER_LOCATION) {
-					spinnerArrayList.add(cursor.getString(cursor.getColumnIndex(QuackDatabaseHelper.COLUMN_LOCATION_ADDRESS)));
-					Log.i(TAG, "Adding to location spinner: " + String.valueOf(spinnerArrayList.size()));
-				} else {
-					spinnerArrayList.add(cursor.getString(cursor.getColumnIndex(QuackDatabaseHelper.COLUMN_HOUSE_IDENTIFIER)));
-					Log.i(TAG, "Adding to house spinner: " + String.valueOf(spinnerArrayList.size()));
-					}
-				cursor.moveToNext();
+	@SuppressLint("UseValueOf")
+	private MatrixCursor populateEntrySpinner(int id, Cursor cursor) {
+		MatrixCursor entryCursor = new MatrixCursor(new String[] { "_id", "spinner_list_item" });
+		if (id == INIT_SPINNER_LOCATION) {
+			entryCursor.addRow(new Object[] { new Long(-1), "Add Location" });
+		} else {
+			entryCursor.addRow(new Object[] { new Long(-1), "Add House" });
+		}
+		
+		int size = cursor.getCount();
+		for (int i=0; i < size; i++){
+			cursor.moveToPosition(i);
+			if (id == INIT_SPINNER_LOCATION) {
+				entryCursor.addRow( new Object[] 
+					{ cursor.getLong(cursor.getColumnIndex(QuackDatabaseHelper.COLUMN_LOCATION_ID)), 
+					  cursor.getString(cursor.getColumnIndex(QuackDatabaseHelper.COLUMN_LOCATION_ADDRESS)) });
+			} else {
+				entryCursor.addRow( new Object[] 
+						{ cursor.getLong(cursor.getColumnIndex("_id")), 
+						  cursor.getString(cursor.getColumnIndex(QuackDatabaseHelper.COLUMN_HOUSE_IDENTIFIER)) });
 			}
 		}
-		return spinnerArrayList;
+		
+		return entryCursor;
 	}
-	
+		
 	private int matchId(Spinner spinner, Long id) {
 		int inc;
 		for (inc = 0;  inc < spinner.getCount() - 1; inc++) {
-			Log.i(TAG, spinner.getCount() + " total items in spinner.\n" + 
-					" current spinner item is " + spinner.getItemAtPosition(inc).toString() + "\n" + 
-					" spinner item id is " + spinner.getItemIdAtPosition(inc) + "\n" + 
-					" adapter item id is " + spinner.getAdapter().getItemId(inc) + "\n" +
-					" and adapter object is " + spinner.getAdapter().getItem(inc) + "\n" +
-					" and target item id is " + String.valueOf(id));
-			// need to account for discrepancy of 1 
 			if (spinner.getAdapter().getItemId(inc) == id) { 
 				break;
 			}
