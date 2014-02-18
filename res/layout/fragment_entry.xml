@@ -2,33 +2,89 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginTop="16dp"
     android:orientation="vertical" >
-    <Button
-        android:id="@+id/entryDateButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/entryTimeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/textView1"
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Location" />  
+          
     <Spinner
         android:id="@+id/entryLocationSpinner"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Spinner
-        android:id="@+id/entryHouseSpinner"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
+   	
+   	<Spinner
+   	    android:id="@+id/entryHouseSpinner"
+   	    android:layout_width="wrap_content"
+   	    android:layout_height="wrap_content"
+   	    android:layout_gravity="center_horizontal" />
+
+   	<TextView
+        android:id="@+id/textView2"
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Time" />  
+        
+    <Button
+        android:id="@+id/entryDateButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:id="@+id/entryTimeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/textView3"
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Headcount" />  
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+	    <EditText
+	        android:id="@+id/entryLiveCount"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:hint="@string/live_count"
+	        android:inputType="phone" />
+
+	    <EditText
+	        android:id="@+id/entryDeadCount"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:ems="10"
+	        android:hint="@string/dead_count"
+	        android:inputType="phone" />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/textView4"
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Egg Count" />
+    
     <EditText
-        android:id="@+id/entryLiveCount"
+        android:id="@+id/entryEggCount"
         android:inputType="phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/live_count" />
-    <EditText
-        android:id="@+id/entryDeadCount"
-        android:inputType="phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/dead_count" />
+        android:hint="@string/egg_count" />
+    
 </LinearLayout>

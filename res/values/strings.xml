@@ -17,8 +17,9 @@
 	<string name="empty_getStartedText">No entries!\nTap the button to get started!</string>
     <string name="date_picker_title">Select Date</string>
     <string name="time_picker_title">Select Time</string>
-    <string name="live_count">Enter Live Count</string>
-    <string name="dead_count">Enter Dead Count</string>
+    <string name="live_count">Live Count</string>
+    <string name="dead_count">Dead Count</string>
+    <string name="egg_count">Enter Egg Count</string>
 		
 
 </resources>
